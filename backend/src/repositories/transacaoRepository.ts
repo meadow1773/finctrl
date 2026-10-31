@@ -79,8 +79,8 @@ export class TransacaoRepository {
                 row.ano,
                 row.valor,
                 row.descricao,
-                row.data_cadastro,
                 row.id,
+                row.data_cadastro,
                 row.data_alteracao,
             )
         }))
