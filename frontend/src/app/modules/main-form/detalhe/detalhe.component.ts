@@ -59,9 +59,11 @@ export class DetalheComponent implements OnInit, OnDestroy{
     formataCelula(transacao: Transacao, coluna: keyof Transacao | string) {
         switch (coluna) {
         case 'valor':
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(transacao[coluna as keyof Transacao] as number)
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+                .format(transacao[coluna as keyof Transacao] as number)
         case 'dataCriacao':
-            return new Date(transacao[coluna as keyof Transacao] as string | number).toLocaleDateString('pt-BR')
+            return new Date(transacao[coluna as keyof Transacao] as string | number)
+                .toLocaleDateString('pt-BR')
         default:
             if (coluna in transacao) {
                 return (transacao as any)[coluna]

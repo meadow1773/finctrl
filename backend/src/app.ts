@@ -1,7 +1,7 @@
 import cors from 'cors'
 import express from 'express'
-import morgan from 'morgan'
 import helmet from 'helmet'
+import morgan from 'morgan'
 
 import { router } from './routes/router'
 
@@ -20,7 +20,7 @@ export function inicializaApp() {
     app.use(morgan(isProduction ? 'combined' : 'dev'))
 
     if (isProduction) {
-        app.use(helmet());
+        app.use(helmet())
     }
 
     // Endpoints da aplicação

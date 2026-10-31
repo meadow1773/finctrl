@@ -8,38 +8,32 @@
         </button>
     </span>
     <span class="valores {{categoriaNomeClasse}}">
-        <input type="text"
-            formControlName="{{categoriaNomeClasse}}" 
-            name="{{categoriaNomeClasse}}" 
-            placeholder="{{calculadora.formataToMoeda(0)}}" 
-            [attr.aria-label]="categoriaNome" 
-            [mask]="'separator.2'"
-            [thousandSeparator]="'.'" 
-            [decimalMarker]="','"
-            [dropSpecialCharacters]="false"
-            (keydown)="atalhoSoma($event)" 
-            (keydown)="atalhoSubtrai($event)"
-
-            (keydown)="testService.testeInput($event, form)"
-        >
-        @if(categoriaNomeClasse != 'saldo-anterior') {
-            <button class="detail" tabindex="-1" (click)="botaoInfo($event)" name="{{categoriaNomeClasse}}">
-                <mat-icon>info</mat-icon>
-            </button>
-            <button class="add" tabindex="-1" (click)="botaoAdd(categoriaNomeClasse)" 
-            [disabled]="form.get(categoriaNomeClasse)?.invalid || !form.get(categoriaNomeClasse)?.value" name="{{categoriaNomeClasse}}">
-                <mat-icon>add_circle</mat-icon>
-            </button>
-            <button class="rmv" tabindex="-1" (click)="botaoRmv(categoriaNomeClasse)" 
-            [disabled]="form.get(categoriaNomeClasse)?.invalid || dataRequest.valores.length <= 1" name="{{categoriaNomeClasse}}">
-                <mat-icon>do_not_disturb_on</mat-icon>
-            </button>
-            <input type="text" formControlName="{{categoriaNomeClasse}}-soma" tabindex="-1" readonly>
-        }
-        <button *ngIf="categoriaNomeClasse === 'saldo-anterior'" class="update" tabindex="-1" (click)="updateEvento.emit()"
-        [disabled]="form.get(categoriaNomeClasse)?.invalid || !form.get(categoriaNomeClasse)?.value">
+        <input type="text" formControlName="{{categoriaNomeClasse}}" name="{{categoriaNomeClasse}}"
+            placeholder="{{calculadora.formataToMoeda(0)}}" [attr.aria-label]="categoriaNome" [mask]="'separator.2'"
+            [thousandSeparator]="'.'" [decimalMarker]="','" [dropSpecialCharacters]="false"
+            (keydown)="atalhoSoma($event)" (keydown)="atalhoSubtrai($event)"
+            (keydown)="testService?.testeInput($event, form)">
+        @if(categoriaNomeClasse === 'saldo-anterior') {
+        <button class="update" tabindex="-1" (click)="updateEvento.emit()"
+            [disabled]="form.get(categoriaNomeClasse)?.invalid || !form.get(categoriaNomeClasse)?.value">
             <mat-icon>sync</mat-icon>
         </button>
+        } @else {
+        <button class="detail" tabindex="-1" (click)="botaoInfo($event)" name="{{categoriaNomeClasse}}">
+            <mat-icon>info</mat-icon>
+        </button>
+        <button class="add" tabindex="-1" (click)="botaoAdd(categoriaNomeClasse)"
+            [disabled]="form.get(categoriaNomeClasse)?.invalid || !form.get(categoriaNomeClasse)?.value"
+            name="{{categoriaNomeClasse}}">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+        <button class="rmv" tabindex="-1" (click)="botaoRmv(categoriaNomeClasse)"
+            [disabled]="form.get(categoriaNomeClasse)?.invalid || dataRequest.valores.length <= 1"
+            name="{{categoriaNomeClasse}}">
+            <mat-icon>do_not_disturb_on</mat-icon>
+        </button>
+        <input type="text" formControlName="{{categoriaNomeClasse}}-soma" tabindex="-1" readonly>
+        }
     </span>
 </div>
 <div class="info {{categoriaNomeClasse}}" *ngIf="detalheOn">

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms'
 
 import { DataRequest } from '../../interfaces/dataRequest'
 
@@ -24,7 +24,9 @@ export class CalculadoraService {
         const controlSoma = form.get(nomeControl + '-soma')
 
         // Define o primeiro valor do DataRequest se estiver vazio
-        if (dataRequest.valores.length < 1) dataRequest.valores.push(this.formataToNumero(controlSoma?.value))
+        if (dataRequest.valores.length < 1){
+            dataRequest.valores.push(this.formataToNumero(controlSoma?.value))
+        }
         
         // Checa se o valor recebido é numérico
         const valor = Number(control?.value.replace(',', '.'))
@@ -114,5 +116,49 @@ export class CalculadoraService {
         return num.reduce((a, b) => {
             return this.inteiroParaDecimal(this.decimalParaInteiro(a) + this.decimalParaInteiro(b))
         }, 0)
+    }
+
+    /**
+     * Valida se o valor inserido é um valor monetário.
+     * @param minVal 
+     * @param maxVal 
+     * @returns 
+     */
+    validadorMonetario(minVal = 0, maxVal?: number) {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const value = control.value
+
+            if (value === null || value === undefined || value === '') {
+                return null
+            }
+
+            let numericValue: number
+
+            if (typeof value === 'number') {
+                numericValue = value
+            } else if (typeof value === 'string') {
+                const cleanString = value
+                    .replace(/[^\d,-]/g, '')
+                    .replace(',', '.')
+
+                numericValue = parseFloat(cleanString)
+            } else {
+                return { invalidMonetary: true }
+            }
+
+            if (isNaN(numericValue)) {
+                return { invalidMonetary: true }
+            }
+
+            if (numericValue < minVal) {
+                return { minMonetary: { min: minVal, actual: numericValue } }
+            }
+
+            if (maxVal !== undefined && numericValue > maxVal) {
+                return { maxMonetary: { max: maxVal, actual: numericValue } }
+            }
+
+            return null
+        }
     }
 }

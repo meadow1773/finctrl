@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 
+import { environment } from '../../env/environment'
 import { DataRequest } from '../../interfaces/dataRequest'
 import { Transacao, Categoria, Tipo, Icone } from '../../interfaces/models'
-import { environment } from '../../env/environment'
 
 @Injectable({
     providedIn: 'root'

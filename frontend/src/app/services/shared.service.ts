@@ -18,7 +18,11 @@ export class SharedService {
      * @returns Texto em formato de classe
      */
     toClass (texto:string) {
-        return texto.toLowerCase().replace(/\s/g,'-').normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+        return texto
+            .toLowerCase()
+            .replace(/\s/g,'-')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, "")
     }
 
     /**

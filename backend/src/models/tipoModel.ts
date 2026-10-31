@@ -5,7 +5,13 @@ export class Tipo extends EntidadeGenerica {
     private nome: string
     private icone: Icone | null
     
-    constructor(id: number, dataCriacao: Date, dataAlteracao: Date, nome: string, icone: Icone | null) {
+    constructor(
+        id: number, 
+        dataCriacao: Date, 
+        dataAlteracao: Date, 
+        nome: string, 
+        icone: Icone | null
+    ) {
         super(id, dataCriacao, dataAlteracao)
         this.nome = nome
         this.icone = icone

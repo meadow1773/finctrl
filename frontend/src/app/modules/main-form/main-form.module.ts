@@ -39,7 +39,15 @@ import { TransacoesStore } from '../../services/store/transacoes/transacoes.stor
         MatSnackBarModule,
         MatDialogModule
     ],
-    providers: [SharedService, ApiService, provideNgxMask(), MesStore, TransacoesStore, TiposStore, CategoriasStore],
+    providers: [
+        SharedService, 
+        ApiService, 
+        provideNgxMask(), 
+        MesStore, 
+        TransacoesStore, 
+        TiposStore, 
+        CategoriasStore
+    ],
     exports: [MainFormComponent]
 })
 export class MainFormModule {

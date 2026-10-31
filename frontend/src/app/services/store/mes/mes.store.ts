@@ -6,7 +6,6 @@ import { MesState } from "./mes.state"
 @Injectable({
     providedIn: 'root'
 })
-
 export class MesStore extends Store<MesState> {
     /**
      * Construtor da classe MesStore

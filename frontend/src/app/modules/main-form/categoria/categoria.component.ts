@@ -8,10 +8,11 @@ import {
     OnDestroy, 
     OnInit, 
     Output } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormControl, FormGroup, } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { lastValueFrom, Subject, takeUntil, tap } from 'rxjs'
 
+import { environment } from '../../../../env/environment'
 import { DataRequest } from '../../../../interfaces/dataRequest'
 import { Icone } from '../../../../interfaces/models'
 import { CalculadoraService } from '../../../services/calculadora.service'
@@ -76,7 +77,11 @@ export class CategoriaComponent implements OnInit, AfterViewInit, OnDestroy {
     /** Gerenciador de subscrições do componente. */
     private destroy$ = new Subject<void>()
 
+    /** Instância do MatSnackBar para exibir mensagens. */
     private snackBar = inject(MatSnackBar)
+
+    /** Objeto de ambiente. */
+    env = environment
 
     /**
      * Método construtor do componente.
@@ -100,7 +105,7 @@ export class CategoriaComponent implements OnInit, AfterViewInit, OnDestroy {
         // Criação de campos.
         this.form.addControl(
             this.categoriaNomeClasse,
-            new FormControl('', Validators.pattern(/^\d+,\d{1,2}$/))
+            new FormControl('', this.calculadora.validadorMonetario())
         )
         this.form.addControl(
             `${this.categoriaNomeClasse}-soma`, new FormControl(this.calculadora.formataToMoeda(0))
@@ -172,10 +177,11 @@ export class CategoriaComponent implements OnInit, AfterViewInit, OnDestroy {
      * Método AfterViewInit do componente.
      */
     //Testes
-    testService = inject(TestService) 
+    testService = environment.production ? null : inject(TestService)
     private domInstance = inject(DOCUMENT)
     ngAfterViewInit() {
-        this.testService.testeTodos(this.domInstance, this.form, this.categoriaNomeClasse)
+        if (environment.production) return
+        this.testService?.testeTodos(this.domInstance, this.form, this.categoriaNomeClasse)
     }
 
     /**
